@@ -23,7 +23,7 @@ model Startup {
   description    String
   count          Int            @default(0) // 선택 횟수
   image          String?
-  Category       Category       @relation(fields: [categoryId], references: [id])
+  category       Category       @relation(fields: [categoryId], references: [id])
   categoryId     Int
   mockInvestorId MockInvestor[]
   comparisons    Comparison[]

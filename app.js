@@ -98,7 +98,7 @@ app.get('/selection', async (req, res) => {
     const select = await prisma.startup.findMany({
       select: {
         name:true, 
-        count:true,
+        category:true,
       },
       skip: parseInt(offset),
       take: parseInt(limit),
@@ -118,6 +118,7 @@ app.post("/investments", async(req, res) => {
   }catch(error) {res.status(400).send({message: error.message}); }
 })
 
+//투자 수정
 app.patch("/investments/:id", async(req, res) => {
   const {id} = req.params;
   const numId = parseInt(id, 10);
@@ -132,6 +133,7 @@ app.patch("/investments/:id", async(req, res) => {
   }catch(error){res.status(404).send({message: error.message}); }
 })
 
+  //투자 삭제
   app.delete("/investments/:id", async(req,res) => {
     const {id} = req.params;
     const numId = parseInt(id, 10);
