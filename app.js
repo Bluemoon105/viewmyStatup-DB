@@ -74,7 +74,6 @@ app.get("/startups/search", async (req, res) => {
   console.log(searchKeyword);
   try {
     const startup = await prisma.startup.findUnique({
-      orderBy: {id: "asc"},
       skip: parseInt(offset),
       take: parseInt(limit),
       where:{
@@ -92,7 +91,7 @@ app.get("/startups/search", async (req, res) => {
   }catch(error){res.status(404).send({message: error.message}); }
 })
 
-
+//기업 선택 횟수 조회
 app.get('/selection', async (req, res) => {
   const { offset = 0, limit = 10 } = req.query;
   try{
@@ -109,6 +108,7 @@ app.get('/selection', async (req, res) => {
   } catch(error) {res.status(400).send({message:error.message});}
 })
 
+//특정 기업에 투자
 app.post("/investments", async(req, res) => {
   try{
     const createInvest = await prisma.mockInvestor.create({
@@ -117,6 +117,33 @@ app.post("/investments", async(req, res) => {
     res.status(200).send(createInvest);
   }catch(error) {res.status(400).send({message: error.message}); }
 })
+
+app.patch("/investments/:id", async(req, res) => {
+  const {id} = req.params;
+  const numId = parseInt(id, 10);
+  try{
+    const updateInvest = await prisma.mockInvestor.update({
+      date:req.body,
+      where: {
+        id: numId,
+      },
+    });
+    const serializedStartups = JSON.stringify(updateInvest, replacer); res.send(serializedStartups);
+  }catch(error){res.status(404).send({message: error.message}); }
+})
+
+  app.delete("/investments/:id", async(req,res) => {
+    const {id} = req.params;
+    const numId = parseInt(id, 10);
+    try{
+      const deleteInvest = await prisma.mockInvestor.delete({
+        where: {
+          id: numId
+        },
+      });
+      const serializedStartups = JSON.stringify(deleteInvest, replacer); res.send(serializedStartups);
+    }catch(error){res.status(404).send({message: error.message}); }
+  })
 
 
 
