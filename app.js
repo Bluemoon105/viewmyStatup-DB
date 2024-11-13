@@ -71,7 +71,6 @@ app.get("/startups/:id", async (req, res) => {
 //검색 기능
 app.get("/startups/search", async (req, res) => {
   const { searchKeyword, offset = 0, limit = 10} =req.query;
-  console.log(searchKeyword);
   try {
     const startup = await prisma.startup.findUnique({
       skip: parseInt(offset),
@@ -81,10 +80,6 @@ app.get("/startups/search", async (req, res) => {
           {name: {contains: searchKeyword} },
           {category: {contains: searchKeyword} },
         ]
-      },
-      select:{
-        name:true,
-        category:true,
       },
     });
     const serializedStartups = JSON.stringify(startup, replacer); res.send(serializedStartups);
@@ -96,13 +91,12 @@ app.get('/selection', async (req, res) => {
   const { offset = 0, limit = 10 } = req.query;
   try{
     const select = await prisma.startup.findMany({
-      select: {
-        name:true, 
-        category:true,
-      },
       skip: parseInt(offset),
       take: parseInt(limit),
       orderBy: {id: "asc"},
+      include:{
+        category:true,
+      }
     });
     res.status(200).send(select);
   } catch(error) {res.status(400).send({message:error.message});}
