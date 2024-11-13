@@ -1,0 +1,53 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Startup {
+  id             Int            @id @default(autoincrement())
+  name           String         @unique
+  actualInvest   BigInt         @default(0) // 실제 누적 투자 금액
+  simInvest      BigInt         @default(0) // 모의 누적 투자 금액
+  revenue        BigInt         @default(0) // 매출액
+  employees      Int            @default(0) // 고용 인원
+  description    String
+  count          Int            @default(0) // 선택 횟수
+  image          String?
+  Category       Category       @relation(fields: [categoryId], references: [id])
+  categoryId     Int
+  mockInvestorId MockInvestor[]
+  comparisons    Comparison[]
+}
+
+model MockInvestor {
+  id           Int     @id @default(autoincrement())
+  name         String  @db.VarChar(10)
+  investAmount BigInt  @default(0)
+  comment      String
+  password     String  @db.VarChar(40)
+  Startup      Startup @relation(fields: [startupId], references: [id])
+  startupId    Int
+}
+
+model Category {
+  id        Int       @id @default(autoincrement())
+  category  String    @db.VarChar(20)
+  startupId Startup[]
+}
+
+model Comparison {
+  id        Int     @id @default(autoincrement())
+  compare   Boolean @default(false)
+  Startup   Startup @relation(fields: [startupId], references: [id], onDelete: Cascade)
+  startupId Int
+}
