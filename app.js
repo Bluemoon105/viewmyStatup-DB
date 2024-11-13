@@ -47,6 +47,14 @@ app.get('/startups', async (req, res) => {
   }
   try {
     const startups = await prisma.startup.findMany({
+      select: {
+        name:true,
+        description:true,
+        category:true,
+        actualInvest:true,
+        revenue:true,
+        employees:true,
+      },
       orderBy,
       skip: parseInt(offset),
       take: parseInt(limit),
