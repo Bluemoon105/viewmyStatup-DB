@@ -47,7 +47,6 @@ app.get('/startups', async (req, res) => {
   }
   try {
     const startups = await prisma.startup.findMany({
-      include:{category: true},
       orderBy,
       skip: parseInt(offset),
       take: parseInt(limit),
