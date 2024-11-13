@@ -97,6 +97,7 @@ app.get('/selection', async (req, res) => {
       select: {
         name:true, 
         count:true,
+        category:true,
       },
     });
     res.status(200).send(select);
