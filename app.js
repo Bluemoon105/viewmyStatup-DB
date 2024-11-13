@@ -94,9 +94,10 @@ app.get('/selection', async (req, res) => {
       skip: parseInt(offset),
       take: parseInt(limit),
       orderBy: {id: "asc"},
-      include:{
-        category:true,
-      }
+      select: {
+        name:true, 
+        count:true,
+      },
     });
     res.status(200).send(select);
   } catch(error) {res.status(400).send({message:error.message});}
