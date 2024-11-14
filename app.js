@@ -37,7 +37,7 @@ function replacer(key, value) {
   return typeof value === 'bigint' ? value.toString() : value;
 }
 
-app.get('/startups', async (req, res) => {
+app.get('/startups/comparison', async (req, res) => {
   const { offset = 0, limit = 10, order = 'id' } = req.query;
   let orderBy;
   switch (order) {
@@ -56,13 +56,30 @@ app.get('/startups', async (req, res) => {
   } catch (error) { res.status(500).send({ message: error.message }); }
 });
 
-app.get("/startups/searching", async (req,res) => {
-  const {searchKeyword} = req.params;
-  try {
-    const startup = await prisma.$queryRaw 
-    'SELECT * FROM  Startup WHERE name = searchKeyword;';
+// app.get("/startups", async (req,res) => {
+//   const searchKeyword= req.query;
+//   try {
+//     const result = await prisma.$queryRawUnsafe
+//     'SELECT * FROM  Startup WHERE name = ${searchKeyword}';
+//     const serializedStartups = JSON.stringify(result, replacer); res.send(serializedStartups);
+// }catch(error) {res.status(404).send({message: error.message})}
+// })
+
+app.get("/startups", async (req, res) => {
+  const {searchKeyword ,offset = 0, limit=10} =req.query;
+  try{
+    const startup = await prisma.startup.findMany({
+      where: {
+        OR: [
+          {name: {search:searchKeyword}},
+          {description: {search:searchKeyword}},
+        ]
+      },
+      skip: parseInt(offset),
+      take: parseInt(limit),
+    })
     const serializedStartups = JSON.stringify(startup, replacer); res.send(serializedStartups);
-}catch(error) {res.status(404).send({message: error.message})}
+  }catch(error){ res. status(501).send({message: error.message});}
 })
 
 //특정 기업 상세 조회
