@@ -50,7 +50,6 @@ app.get('/startups', async (req, res) => {
       orderBy,
       skip: parseInt(offset),
       take: parseInt(limit),
-      inclued: {category: true},
     }); // BigInt 값을 문자열로 변환하여 JSON 응답 생성 
     const serializedStartups = JSON.stringify(startups, replacer); res.send(serializedStartups);
     
@@ -152,6 +151,6 @@ app.patch("/investments/:id", async(req, res) => {
 
 
 // 프론트랑 겹치니깐 8000으로 바꾼다.
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 8800;
 
 app.listen(port, () => console.log(`Server Started :${port}`));
