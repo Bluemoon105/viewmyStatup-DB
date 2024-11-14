@@ -50,7 +50,6 @@ app.get('/startups/comparison', async (req, res) => {
       orderBy,
       skip: parseInt(offset),
       take: parseInt(limit),
-      include: {category:true},
     }); // BigInt 값을 문자열로 변환하여 JSON 응답 생성 
     const serializedStartups = JSON.stringify(startups, replacer); res.send(serializedStartups);
     
