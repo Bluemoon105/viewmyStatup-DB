@@ -50,6 +50,7 @@ app.get('/startups', async (req, res) => {
       orderBy,
       skip: parseInt(offset),
       take: parseInt(limit),
+      inclued: {category: true},
     }); // BigInt 값을 문자열로 변환하여 JSON 응답 생성 
     const serializedStartups = JSON.stringify(startups, replacer); res.send(serializedStartups);
     
@@ -72,14 +73,11 @@ app.get("/startups/:id", async (req, res) => {
 app.get("/startups/search", async (req, res) => {
   const { searchKeyword, offset = 0, limit = 10} =req.query;
   try {
-    const startup = await prisma.startup.findUnique({
+    const startup = await prisma.startup.find({
       skip: parseInt(offset),
       take: parseInt(limit),
       where:{
-        OR: [
-          {name: {contains: searchKeyword} },
-          {category: {contains: searchKeyword} },
-        ]
+        name: {contains: searchKeyword},
       },
     });
     const serializedStartups = JSON.stringify(startup, replacer); res.send(serializedStartups);
@@ -97,7 +95,6 @@ app.get('/selection', async (req, res) => {
       select: {
         name:true, 
         count:true,
-        category:true,
       },
     });
     res.status(200).send(select);
@@ -120,7 +117,12 @@ app.patch("/investments/:id", async(req, res) => {
   const numId = parseInt(id, 10);
   try{
     const updateInvest = await prisma.mockInvestor.update({
-      date:req.body,
+      date:{
+        name,
+        investAmount,
+        comment, 
+        password,
+      },
       where: {
         id: numId,
       },
@@ -133,14 +135,18 @@ app.patch("/investments/:id", async(req, res) => {
   app.delete("/investments/:id", async(req,res) => {
     const {id} = req.params;
     const numId = parseInt(id, 10);
-    try{
-      const deleteInvest = await prisma.mockInvestor.delete({
+      const deleteInvest = await prisma.mockInvestor.findUnique({
         where: {
           id: numId
         },
       });
-      const serializedStartups = JSON.stringify(deleteInvest, replacer); res.send(serializedStartups);
-    }catch(error){res.status(404).send({message: error.message}); }
+      if(!deleteInvest){
+        return res.status(404).message({message: "투자가 존재하지 않습니다"});
+      }if(deleteInvest.password !== password){
+        return res.status(401).send({message: "비밀번호가 일치하지 않습니다"});
+      }
+      await prisma.mockInvestor.delete({where: {id: numId}});
+      return res.status(200).send({message: "게시글이 삭제 되었습니다"});
   })
 
 
