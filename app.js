@@ -50,6 +50,7 @@ app.get('/startups/comparison', async (req, res) => {
       orderBy,
       skip: parseInt(offset),
       take: parseInt(limit),
+      include: {category:true},
     }); // BigInt 값을 문자열로 변환하여 JSON 응답 생성 
     const serializedStartups = JSON.stringify(startups, replacer); res.send(serializedStartups);
     
@@ -70,10 +71,7 @@ app.get("/startups", async (req, res) => {
   try{
     const startup = await prisma.startup.findMany({
       where: {
-        OR: [
-          {name: {search:searchKeyword}},
-          {description: {search:searchKeyword}},
-        ]
+        name: {contains:searchKeyword},
       },
       skip: parseInt(offset),
       take: parseInt(limit),
@@ -106,8 +104,8 @@ app.get('/selection', async (req, res) => {
       select: {
         name:true, 
         count:true,
-        categoryId:true,
       },
+
     });
     res.status(200).send(select);
   } catch(error) {res.status(400).send({message:error.message});}
