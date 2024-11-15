@@ -56,15 +56,6 @@ app.get('/startups/comparison', async (req, res) => {
   } catch (error) { res.status(500).send({ message: error.message }); }
 });
 
-// app.get("/startups", async (req,res) => {
-//   const searchKeyword= req.query;
-//   try {
-//     const result = await prisma.$queryRawUnsafe
-//     'SELECT * FROM  Startup WHERE name = ${searchKeyword}';
-//     const serializedStartups = JSON.stringify(result, replacer); res.send(serializedStartups);
-// }catch(error) {res.status(404).send({message: error.message})}
-// })
-
 app.get("/startups", async (req, res) => {
   const {searchKeyword ,offset = 0, limit=10} =req.query;
   try{
