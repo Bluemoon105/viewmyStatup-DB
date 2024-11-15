@@ -165,6 +165,6 @@ app.patch("/investments/:id", async(req, res) => {
   })
 
 // 프론트랑 겹치니깐 8000으로 바꾼다.
-const port = process.env.PORT || 5432;
+const port = process.env.PORT || 8000;
 
 app.listen(port, () => console.log(`Server Started :${port}`));
