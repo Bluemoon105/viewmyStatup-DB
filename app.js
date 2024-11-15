@@ -110,6 +110,7 @@ app.get('/selection', async (req, res) => {
   } catch(error) {res.status(400).send({message:error.message});}
 })
 
+//전체 투자 현황 조회
 app.get("/investments", async(req, res) => {
   const {offset = 0, limit =10} =req.query;
   try{
@@ -163,9 +164,7 @@ app.patch("/investments/:id", async(req, res) => {
       return res.status(200).send({message: "게시글이 삭제 되었습니다"});
   })
 
-
-
 // 프론트랑 겹치니깐 8000으로 바꾼다.
-const port = process.env.PORT || 8800;
+const port = process.env.PORT || 5432;
 
 app.listen(port, () => console.log(`Server Started :${port}`));
