@@ -3,6 +3,7 @@ dotenv.config();
 import express from 'express';
 import { PrismaClient, Prisma } from '@prisma/client';
 import { number } from 'superstruct';
+import cors from 'cors';
 // import { CreateUser, PatchUser } from './structs.js';
 // import { assert } from 'superstruct';
 
@@ -10,6 +11,10 @@ const prisma = new PrismaClient();
 
 const app = express();
 app.use(express.json());
+
+app.use(cors({ origin: [
+  'http://localhost:3000'
+]}));
 
 // function asyncHandler(handler) {
 //   return async function (req, res) {
