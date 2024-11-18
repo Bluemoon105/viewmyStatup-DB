@@ -56,12 +56,16 @@ app.get('/startups/comparison', async (req, res) => {
   } catch (error) { res.status(500).send({ message: error.message }); }
 });
 
+//검색 기능
 app.get("/startups", async (req, res) => {
   const {searchKeyword ,offset = 0, limit=10} =req.query;
   try{
     const startup = await prisma.startup.findMany({
       where: {
         name: {contains:searchKeyword},
+      },
+      include: {
+        category: true,
       },
       skip: parseInt(offset),
       take: parseInt(limit),
