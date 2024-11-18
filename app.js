@@ -64,9 +64,6 @@ app.get("/startups", async (req, res) => {
       where: {
         name: {contains:searchKeyword},
       },
-      include: {
-        category: true,
-      },
       skip: parseInt(offset),
       take: parseInt(limit),
     })
