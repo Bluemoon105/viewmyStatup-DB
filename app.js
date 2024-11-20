@@ -1,11 +1,11 @@
 import * as dotenv from 'dotenv';
-dotenv.config();
 import express from 'express';
 import { PrismaClient, Prisma } from '@prisma/client';
-import { number } from 'superstruct';
+import { CreateInvest, PatchInvest } from './structs.js';
 import cors from 'cors';
-// import { CreateUser, PatchUser } from './structs.js';
-// import { assert } from 'superstruct';
+import { assert } from 'superstruct';
+
+dotenv.config();
 
 const prisma = new PrismaClient();
 
@@ -138,11 +138,13 @@ app.get("/investments/:id", async (req, res) => {
 
 //특정 기업에 투자
 app.post("/investments", async(req, res) => {
+  assert(req.body, CreateInvest);
   try{
-    const createInvest = await prisma.mockInvestor.create({
+    const createdInvest = await prisma.mockInvestor.create({
       data: req.body
     });
-    res.status(201).send(createInvest);
+    
+    res.status(201).send(createdInvest);
   }catch(error) {res.status(400).send({message: error.message}); }
 })
 
@@ -150,6 +152,7 @@ app.post("/investments", async(req, res) => {
 app.patch("/investments/:id", async(req, res) => {
   const {id} = req.params;
   const numId = parseInt(id, 10);
+  assert (req.body, PatchInvest)
   try{
     const updateInvest = await prisma.mockInvestor.update({
       date: req.body,
