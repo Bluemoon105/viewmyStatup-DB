@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Startup" ALTER COLUMN "simInvest" SET DATA TYPE BIGINT;

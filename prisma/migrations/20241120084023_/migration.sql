@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Startup" ALTER COLUMN "revenue" SET DATA TYPE BIGINT;
