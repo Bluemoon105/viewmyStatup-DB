@@ -123,6 +123,19 @@ app.get("/investments", async(req, res) => {
   }catch(error) {res.status(401).send({message:error.message});}
 })
 
+//투자자 상제 조회 
+app.get("/investments/:id", async (req, res) => {
+  const {id} = req.params;
+  const numId = parseInt(id, 10);
+  try {
+    const investor = await prisma.mockInvestor.findUnique({
+      where: { id: numId },
+    });
+    const serializedStartups = JSON.stringify(investor, replacer); res.send(serializedStartups);
+  }catch(error) {res.status(404).send({message: error.message}); }
+});
+
+
 //특정 기업에 투자
 app.post("/investments", async(req, res) => {
   try{
