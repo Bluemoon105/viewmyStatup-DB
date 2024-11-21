@@ -11,13 +11,13 @@ const prisma = new PrismaClient();
 const app = express();
 app.use(express.json());
 
-// const corsOption = {
-//   origin: [
-//     "http://127.0.0.1:3000",
-//     "http://localhost:3000",
-//     "http://localhost:3001",
-//   ],
-// };
+const corsOption = {
+  origin: [
+    "http://127.0.0.1:3000",
+    "http://localhost:3000",
+    "http://localhost:3001",
+  ],
+};
 
 app.use(cors());
 
