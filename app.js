@@ -17,20 +17,20 @@ app.use(express.json());
 //   credentials: true // 쿠키 허용
 // }));
 
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:3000'); // 특정 출처 허용
-  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS'); // 허용할 메서드
-  res.header('Access-Control-Allow-Headers', 'Content-Type'); // 허용할 헤더
-  res.header('Access-Control-Allow-Credentials', 'true'); // 쿠키 허용
-  next();
-});
-
-// app.options('*', (req, res) => {
-//   res.header('Access-Control-Allow-Origin', 'https://example.com');
-//   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-//   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-//   res.sendStatus(204);
+// app.use((req, res, next) => {
+//   res.header('Access-Control-Allow-Origin', 'http://localhost:3000'); // 특정 출처 허용
+//   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS'); // 허용할 메서드
+//   res.header('Access-Control-Allow-Headers', 'Content-Type'); // 허용할 헤더
+//   res.header('Access-Control-Allow-Credentials', 'true'); // 쿠키 허용
+//   next();
 // });
+
+app.options('*', (req, res) => {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.sendStatus(204);
+});
 // function asyncHandler(handler) {
 //   return async function (req, res) {
 //     try {
