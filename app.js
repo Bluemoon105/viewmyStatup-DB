@@ -147,8 +147,7 @@ app.post("/investments", async(req, res) => {
     const createdInvest = await prisma.mockInvestor.create({
       data: req.body
     });
-    
-    res.status(201).send(createdInvest);
+    res.status(202).send(createdInvest);
   }catch(error) {res.status(400).send({message: error.message}); }
 })
 
