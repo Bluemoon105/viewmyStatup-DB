@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(cors({
   origin: 'http://localhost:3000',
   methods: ['GET', 'POST'],
-  credentials:true,
+  credentials: true // 쿠키 허용
 }));
 
 app.use((req, res, next) => {
@@ -23,6 +23,13 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Headers', 'Content-Type'); // 허용할 헤더
   res.header('Access-Control-Allow-Credentials', 'true'); // 쿠키 허용
   next();
+});
+
+app.options('*', (req, res) => {
+  res.header('Access-Control-Allow-Origin', 'https://example.com');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.sendStatus(204);
 });
 // function asyncHandler(handler) {
 //   return async function (req, res) {
