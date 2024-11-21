@@ -13,13 +13,13 @@ app.use(express.json());
 
 app.use(cors({
   origin: 'http://localhost:3000',
-  methods: ['GET', 'POST', 'PATCH', 'DELETE'],
+  methods: ['GET', 'POST'],
   credentials:true,
 }));
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', 'http://localhost:3000'); // 특정 출처 허용
-  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PATCH, DELETE'); // 허용할 메서드
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS'); // 허용할 메서드
   res.header('Access-Control-Allow-Headers', 'Content-Type'); // 허용할 헤더
   res.header('Access-Control-Allow-Credentials', 'true'); // 쿠키 허용
   next();
