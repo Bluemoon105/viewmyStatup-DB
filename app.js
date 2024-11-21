@@ -16,7 +16,7 @@ const corsOptions = {
   origin: ['http://127.0.0.1:3000', ' http://localhost:3000']
 };
 
-app.use(cors());
+app.use(cors(corsOptions));
 // function asyncHandler(handler) {
 //   return async function (req, res) {
 //     try {
