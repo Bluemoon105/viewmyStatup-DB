@@ -19,7 +19,7 @@ const corsOption = {
   ],
 };
 
-app.use(cors());
+app.use(cors(corsOption));
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', 'http://localhost:3000'); // 특정 출처 허용
