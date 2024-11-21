@@ -11,15 +11,15 @@ const prisma = new PrismaClient();
 const app = express();
 app.use(express.json());
 
-const corsOption = {
-  origin: [
-    "http://127.0.0.1:3000",
-    "http://localhost:3000",
-    "http://localhost:3001",
-  ],
-};
+// const corsOption = {
+//   origin: [
+//     "http://127.0.0.1:3000",
+//     "http://localhost:3000",
+//     "http://localhost:3001",
+//   ],
+// };
 
-app.use(cors(corsOption));
+app.use(cors());
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', 'http://localhost:3000'); // 특정 출처 허용
