@@ -19,13 +19,13 @@ app.use(express.json());
 //   ],
 // };
 
-app.use(cors({
-  origin: 'http://localhost:3000', // 허용할 클라이언트 출처
-  methods: ['GET', 'POST', 'OPTIONS'], // 허용할 HTTP 메서드
-  credentials: true // 인증 정보(쿠키 등) 허용
-}));
+// app.use(cors({
+//   origin: 'http://localhost:3000', // 허용할 클라이언트 출처
+//   methods: ['GET', 'POST', 'OPTIONS'], // 허용할 HTTP 메서드
+//   credentials: true // 인증 정보(쿠키 등) 허용
+// }));
 
-
+app.use(cors());
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', 'http://localhost:3000'); // Replace with your frontend's origin
