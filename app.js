@@ -18,9 +18,11 @@ app.use((req, res) => {
   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
 });
 
-app.use(cors({ origin: [
-  'http://localhost:3000'
-]}));
+const corsOption = {
+  origin : 'http://localhost:3000'
+};
+
+app.use((cors(corsOption)));
 // function asyncHandler(handler) {
 //   return async function (req, res) {
 //     try {
