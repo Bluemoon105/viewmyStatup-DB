@@ -16,7 +16,7 @@ Content-Type: application/json
 
 {
   "name": "테스트",
-  "investAmount": 50000,
+  "investAmount": 500000,
   "comment": "투자 테스트",
   "password": "1234",
   "startupId": 2
