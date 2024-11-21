@@ -28,10 +28,9 @@ app.use(cors({
 app.use(cors(corsOption));
 
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:3000'); // 특정 출처 허용
-  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS'); // 허용할 메서드
-  res.header('Access-Control-Allow-Headers', 'Content-Type'); // 허용할 헤더
-  res.header('Access-Control-Allow-Credentials', 'true'); // 쿠키 허용
+  res.header('Access-Control-Allow-Origin', 'http://localhost:3000'); // Replace with your frontend's origin
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Add any other necessary headers
   next();
 });
 
@@ -165,11 +164,12 @@ app.post("/investments", async(req, res) => {
   assert(req.body, CreateInvest);
   try{
     const createdInvest = await prisma.mockInvestor.create({
-      data: req.body
+      data: req.body,
     });
     const serializedInvest = JSON.stringify(createdInvest, replacer); res.send(serializedInvest);
   }catch(error) {res.status(400).send({message: error.message}); }
 })
+
 
 //투자 수정
 app.patch("/investments/:id", async(req, res) => {
@@ -178,7 +178,7 @@ app.patch("/investments/:id", async(req, res) => {
   assert (req.body, PatchInvest)
   try{
     const updateInvest = await prisma.mockInvestor.update({
-      date: req.body,
+      data: req.body,
       where: {
         id: numId,
       },

@@ -11,13 +11,13 @@ GET http://localhost:8000/selection
 GEt http://localhost:8000/startups/search?코드
 
 ###
-POST  http://localhost:8000/investments
+PATCH   http://localhost:8000/investments/7
 Content-Type: application/json
 
 {
-  "name": "테스트",
+  "name": "유지민",
   "investAmount": 500000,
   "comment": "투자 테스트",
   "password": "1234",
-  "startupId": 2
+  "startupId": 5
 }
