@@ -11,19 +11,17 @@ const prisma = new PrismaClient();
 const app = express();
 app.use(express.json());
 
-// app.use(cors({
-//   origin: 'http://localhost:3000',
-//   methods: ['GET', 'POST'],
-//   credentials: true // 쿠키 허용
-// }));
+app.use(cors({
+  origin: 'http://localhost:3000'
+}));
 
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:3000'); // 특정 출처 허용
-  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS'); // 허용할 메서드
-  res.header('Access-Control-Allow-Headers', 'Content-Type'); // 허용할 헤더
-  res.header('Access-Control-Allow-Credentials', 'true'); // 쿠키 허용
-  next();
-});
+// app.use((req, res, next) => {
+//   res.header('Access-Control-Allow-Origin', 'http://localhost:3000'); // 특정 출처 허용
+//   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS'); // 허용할 메서드
+//   res.header('Access-Control-Allow-Headers', 'Content-Type'); // 허용할 헤더
+//   res.header('Access-Control-Allow-Credentials', 'true'); // 쿠키 허용
+//   next();
+// });
 
 app.options('*', (req, res) => {
   res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
@@ -156,7 +154,7 @@ app.post("/investments", async(req, res) => {
     const createdInvest = await prisma.mockInvestor.create({
       data: req.body
     });
-    res.status(202).send(createdInvest);
+    const serializedInvest = JSON.stringify(createdInvest, replacer); res.send(serializedInvest);
   }catch(error) {res.status(400).send({message: error.message}); }
 })
 
