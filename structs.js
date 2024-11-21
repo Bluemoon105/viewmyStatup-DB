@@ -8,8 +8,4 @@ export const CreateInvest = s.object({
     startupId: s.number(),
 });
 
-export const PatchCount = s.object({
-    count: s.number(),
-});
-
 export const PatchInvest = s.partial(CreateInvest);
