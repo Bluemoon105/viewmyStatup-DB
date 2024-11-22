@@ -239,6 +239,12 @@ app.patch("/api/investments/:id", async (req, res) => {
     return res.status(200).send({ message: "게시글이 삭제 되었습니다" });
   });
 
+  app.get("/api/comparison/:id", async (req, res) => {
+    const {id} =req.params;
+    const numId = parseInt(id, 10);
+    const getComparison = await prisma.startup.fin
+  })
+
 // 프론트랑 겹치니깐 8000으로 바꾼다.
 const port = process.env.PORT || 8000;
 
